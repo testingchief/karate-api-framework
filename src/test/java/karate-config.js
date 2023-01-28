@@ -4,7 +4,7 @@ function fn() {
     // karate.configure('abortSuiteOnFailure', true);
 
     var config = {
-        baseUrl: 'http://192.168.0.182:8080'
+        baseUrl: 'http://192.168.0.182:8080/parabank/services/bank'
     };
 
     return config;
