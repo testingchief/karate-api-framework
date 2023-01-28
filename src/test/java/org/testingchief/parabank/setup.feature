@@ -1,4 +1,4 @@
-@parabank @setup
+@parabank_setup
 Feature: Parabank REST API - Setup
 
   Background:
