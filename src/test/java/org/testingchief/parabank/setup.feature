@@ -1,8 +1,9 @@
 @parabank_setup
-Feature: Parabank REST API - Setup
+Feature: Setup Parabank
 
   Background:
     * url baseUrl
+    * header Accept = 'application/json'
 
   Scenario: Stop JMS Listener
     Given path 'shutdownJmsListener'
@@ -10,13 +11,23 @@ Feature: Parabank REST API - Setup
     Then status 204
 
   Scenario: Start JMS Listener
-    * print 'Hello World'
+    Given path 'startupJmsListener'
+    When method POST
+    Then status 204
 
   Scenario: Clean the Database
-    * print 'Hello World'
+    Given path 'cleanDB'
+    When method POST
+    Then status 204
 
   Scenario: Initialize the Database
-    * print 'Hello World'
+    Given path 'initializeDB'
+    When method POST
+    Then status 204
 
   Scenario: Set Parameters
-    * print 'Hello World'
+    Given path 'setParameter'
+    And path 'productName' //parameter name
+    And path '1234' //paramater value
+    When method POST
+    Then status 204
