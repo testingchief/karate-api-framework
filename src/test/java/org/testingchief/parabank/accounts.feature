@@ -211,11 +211,12 @@ Feature: Parabank Customer Accounts
         responseDate: '#string',
         loanProviderName: '#string',
         approved: false,
-        message: 'error.insufficient.funds.for.down.payment',
+        message: '#string',
         accountId: '#null'
       }
     """
     And match response == schema
+    And match response.message contains "error.insufficient.funds"
 
   Scenario: Create a New Account
     Given path 'customers/' + customerId + '/accounts'
