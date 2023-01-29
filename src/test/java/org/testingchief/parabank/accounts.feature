@@ -151,6 +151,13 @@ Feature: Parabank Customer Accounts
     * def accountsCount = response.length
     * def accountIndex = fakerObj.number().numberBetween(0, accountsCount)
     * def accountId = response[accountIndex].id
+
+    Given path 'deposit'
+    And param accountId = accountId
+    And param amount = '50000'
+    When method POST
+    Then status 200
+
     * def loanAmount = fakerObj.number().numberBetween(1000, 10000)
     * def downPayment = loanAmount * 0.25
 
@@ -173,7 +180,6 @@ Feature: Parabank Customer Accounts
     """
     And match response == schema
 
-
   Scenario: Loan Rejected
     Given path 'customers/' + customerId + '/accounts'
     When method GET
@@ -181,9 +187,16 @@ Feature: Parabank Customer Accounts
     * def accountsCount = response.length
     * def accountIndex = fakerObj.number().numberBetween(0, accountsCount)
     * def accountId = response[accountIndex].id
-    * def loanAmount = fakerObj.number().numberBetween(1000, 10000)
-    * def downPayment = loanAmount * 0.01
+    * def accountBalance = response[accountIndex].balance
 
+    Given path 'withdraw'
+    And param accountId = accountId
+    And param amount = accountBalance + 2000
+    When method POST
+    Then status 200
+
+    * def loanAmount = fakerObj.number().numberBetween(10000, 100000)
+    * def downPayment = accountBalance
     Given path 'requestLoan'
     And param customerId = customerId
     And param amount = loanAmount
