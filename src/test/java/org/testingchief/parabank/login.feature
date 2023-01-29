@@ -6,6 +6,8 @@ Feature: Login to Parabank
     * header Accept = 'application/json'
 
   Scenario: Customer Login
+    * call read('setup.feature@cleanDB')
+    * call read('setup.feature@initializeDB')
     Given path 'login'
     And path 'john' //userName
     And path 'demo' //password
