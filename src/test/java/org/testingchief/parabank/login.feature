@@ -5,7 +5,7 @@ Feature: Login to Parabank
     * url baseUrl
     * header Accept = 'application/json'
 
-  Scenario: Login
+  Scenario: Customer Login
     Given path 'login'
     And path 'john'
     And path 'demo'
