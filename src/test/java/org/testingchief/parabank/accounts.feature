@@ -70,11 +70,11 @@ Feature: Parabank Customer Accounts
     When method POST
     Then status 200
 
-#  Scenario: Create a New Account
-#    Given path 'createAccount'
-#    And param customerId = '12212'
-#    And param newAccountType = 'SAVINGS'
-#    And param fromAccountId = '13122'
-#    When method POST
-#    Then status 200
-
+  @ignore
+  Scenario: Create a New Account
+    Given path 'createAccount'
+    And param customerId = '12212'
+    And param newAccountType = 'SAVINGS'
+    And param fromAccountId = '13122'
+    When method POST
+    Then status 200

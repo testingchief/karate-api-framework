@@ -18,13 +18,14 @@ Feature: Parabank Stock Positions
     When method GET
     Then status 200
 
-#  Scenario: Get Position History by Id within a Date range
-#    Given path 'positions'
-#    And path '12345' //positionId
-#    And path '01-28-2023'
-#    And path '01-28-2023'
-#    When method GET
-#    Then status 200
+  @ignore
+  Scenario: Get Position History by Id within a Date range
+    Given path 'positions'
+    And path '12345' //positionId
+    And path '01-28-2023'
+    And path '01-28-2023'
+    When method GET
+    Then status 200
 
   Scenario: Buy a Position
     Given path 'customers'
