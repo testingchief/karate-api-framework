@@ -182,7 +182,7 @@ Feature: Parabank Customer Accounts
     * def accountIndex = fakerObj.number().numberBetween(0, accountsCount)
     * def accountId = response[accountIndex].id
     * def loanAmount = fakerObj.number().numberBetween(1000, 10000)
-    * def downPayment = loanAmount * 0.10
+    * def downPayment = loanAmount * 0.01
 
     Given path 'requestLoan'
     And param customerId = customerId
@@ -204,11 +204,28 @@ Feature: Parabank Customer Accounts
     """
     And match response == schema
 
-  @ignore
   Scenario: Create a New Account
+    Given path 'customers/' + customerId + '/accounts'
+    When method GET
+    Then status 200
+    * def accountsCount = response.length
+    * def accountIndex = fakerObj.number().numberBetween(0, accountsCount)
+    * def accountId = response[accountIndex].id
+
     Given path 'createAccount'
-    And param customerId = '#(customerId)'
-    And param newAccountType = 'SAVINGS'
-    And param fromAccountId = '#(accountId)'
+    And param customerId = customerId
+    And param newAccountType = 0
+    And param fromAccountId = accountId
+    And header Accept = 'application/json'
     When method POST
     Then status 200
+    * def schema =
+    """
+      {
+        id: '#number',
+        customerId: '#(customerId)',
+        type: '#string? _ =="CHECKING" || _ =="SAVINGS" || _ =="LOAN" ',
+        balance: 0
+      }
+    """
+    And match response == schema
