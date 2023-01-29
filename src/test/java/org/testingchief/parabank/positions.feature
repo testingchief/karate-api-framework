@@ -4,19 +4,43 @@ Feature: Parabank Stock Positions
   Background:
     * url baseUrl
     * header Accept = 'application/json'
+    * def customerId = 12212
+    * def fakerObj =  new faker()
 
+  @getPositions
   Scenario: Get Positions for Customer
-    Given path 'customers'
-    And path '12212' //customerId
-    And path 'positions'
+    Given path 'customers/' + customerId + '/positions'
     When method GET
     Then status 200
+    And match each response ==
+    """
+      {
+        "positionId": '#number',
+        "customerId": '#(customerId)',
+        "name": '#string',
+        "symbol": '#string',
+        "shares": '#number',
+        "purchasePrice": '#number'
+      }
+    """
 
   Scenario: Get Position by Id
-    Given path 'positions'
-    And path '12345' //positionId
+    * def positions = call read('positions.feature@getPositions')
+    * def positionId = positions.response[0].positionId
+    Given path 'positions/' + positionId
     When method GET
     Then status 200
+    And match response ==
+    """
+      {
+        "positionId": '#number',
+        "customerId": '#(customerId)',
+        "name": '#string',
+        "symbol": '#string',
+        "shares": '#number',
+        "purchasePrice": '#number'
+      }
+    """
 
   @ignore
   Scenario: Get Position History by Id within a Date range

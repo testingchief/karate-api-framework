@@ -137,12 +137,8 @@ Feature: Parabank Customer Accounts
     And match response.accountId == accountId
 
     #clean and initialize the DB
-    Given path 'cleanDB'
-    When method POST
-    Then status 204
-    Given path 'initializeDB'
-    When method POST
-    Then status 204
+    * call read('setup.feature@cleanDB')
+    * call read('setup.feature@initializeDB')
 
   Scenario: Loan Approved
     Given path 'customers/' + customerId + '/accounts'

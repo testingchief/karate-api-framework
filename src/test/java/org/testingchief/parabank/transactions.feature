@@ -4,54 +4,108 @@ Feature: Parabank Account Transactions
   Background:
     * url baseUrl
     * header Accept = 'application/json'
+    * def customerId = 12212
+    * def fakerObj =  new faker()
 
+  @getTransactions
   Scenario: Get the List of Transactions
-    Given path 'accounts'
-    And path '13122' //accountId
-    And path 'transactions'
+    * def customerAccounts = call read('accounts.feature@findAccounts')
+    * def accountId = customerAccounts.response[0].id
+
+    Given path 'accounts/' + accountId + '/transactions'
     When method GET
     Then status 200
+    And match each response ==
+    """
+      {
+        "id": '#number',
+        "accountId": '#(accountId)',
+        "type": '#string? _ =="Credit" || _ =="Debit" ',
+        "date": '#string',
+        "amount": '#number',
+        "description": '#string'
+      }
+    """
 
   Scenario: Find Transactions by Amount
-    Given path 'accounts'
-    And path '13122' //accountId
-    And path 'transactions/amount'
-    And path '100.00'
+    * def txList = call read('transactions.feature@getTransactions')
+    * def accountId = txList.response[0].accountId
+    * def txAmount = txList.response[0].amount
+    Given path 'accounts/' + accountId + '/transactions/amount/' + txAmount
     When method GET
     Then status 200
+    And match each response ==
+    """
+      {
+        "id": '#number',
+        "accountId": '#(accountId)',
+        "type": '#string? _ =="Credit" || _ =="Debit" ',
+        "date": '#string',
+        "amount": '#number',
+        "description": '#string'
+      }
+    """
 
   Scenario: Find Transactions by Month and Type
-    Given path 'accounts'
-    And path '13122' //accountId
-    And path 'transactions/month'
-    And path '1'
-    And path 'type'
-    And path 'Credit'
+    * def txList = call read('transactions.feature@getTransactions')
+    * def accountId = txList.response[0].accountId
+    * def txType = txList.response[0].type
+    * def month = fakerObj.number().randomDigitNotZero()
+    Given path 'accounts/' + accountId + '/transactions/month/' + month + '/type/' + txType
     When method GET
     Then status 200
+    And match each response ==
+    """
+      {
+        "id": '#number',
+        "accountId": '#(accountId)',
+        "type": '#string? _ =="Credit" || _ =="Debit" ',
+        "date": '#string',
+        "amount": '#number',
+        "description": '#string'
+      }
+    """
 
   Scenario: Find Transactions for Date range
-    Given path 'accounts'
-    And path '13122' //accountId
-    And path 'transactions'
-    And path 'fromDate'
-    And path '01-01-2022'
-    And path 'toDate'
-    And path '01-01-2023'
+    * def txList = call read('transactions.feature@getTransactions')
+    * def accountId = txList.response[0].accountId
+    Given path 'accounts/' + accountId + '/transactions/fromDate/' + '01-01-2022' + '/toDate/' + '01-01-2023'
     When method GET
     Then status 200
+    And match each response ==
+    """
+      {
+        "id": '#number',
+        "accountId": '#(accountId)',
+        "type": '#string? _ =="Credit" || _ =="Debit" ',
+        "date": '#string',
+        "amount": '#number',
+        "description": '#string'
+      }
+    """
 
   Scenario: Find Transactions for a specific Date
-    Given path 'accounts'
-    And path '13122' //accountId
-    And path 'transactions'
-    And path 'onDate'
-    And path '01-27-2023'
+    * def txList = call read('transactions.feature@getTransactions')
+    * def accountId = txList.response[0].accountId
+    Given path 'accounts/' + accountId + '/transactions/onDate/' + '2022-12-11'
     When method GET
     Then status 200
 
   Scenario: Get details of Transaction by Id
-    Given path 'transactions'
-    And path '12145' //transactionId
+    * def txList = call read('transactions.feature@getTransactions')
+    * def accountId = txList.response[0].accountId
+    * def txId = txList.response[0].id
+    Given path 'transactions/' + txId
     When method GET
     Then status 200
+    And match response ==
+    """
+      {
+        "id": '#number',
+        "accountId": '#(accountId)',
+        "type": '#string? _ =="Credit" || _ =="Debit" ',
+        "date": '#string',
+        "amount": '#number',
+        "description": '#string'
+      }
+    """
