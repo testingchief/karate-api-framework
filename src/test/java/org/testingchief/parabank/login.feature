@@ -11,3 +11,19 @@ Feature: Login to Parabank
     And path 'demo'
     When method GET
     Then status 200
+    And match response ==
+    """
+    {
+       "id": '#number',
+       "firstName": '#string',
+       "lastName": '#string',
+       "address": {
+            "street": '#string',
+            "city": '#string',
+            "state": '#string',
+            "zipCode": '#string'
+        },
+       "phoneNumber": '#string',
+       "ssn": '#string'
+    }
+    """
