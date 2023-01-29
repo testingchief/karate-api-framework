@@ -24,4 +24,26 @@ class TestRunner {
                 .tags("@parabank_accounts")
                 .relativeTo(getClass());
     }
+
+    @Karate.Test
+    Karate testParabankTransactions() {
+        return Karate.run()
+                .tags("@parabank_transactions")
+                .relativeTo(getClass());
+    }
+
+    @Karate.Test
+    Karate testParabankCustomers() {
+        return Karate.run()
+                .tags("@parabank_customers")
+                .relativeTo(getClass());
+    }
+
+    @Karate.Test
+    Karate testParabankStockPositions() {
+        return Karate.run()
+                .tags("@parabank_positions")
+                .relativeTo(getClass());
+    }
+
 }
