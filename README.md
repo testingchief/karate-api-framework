@@ -1,3 +1,9 @@
+![Build](http://img.shields.io/badge/Build-1.0-GREEN.svg)
+![Maven](https://github.com/testingchief/karate-api-framework/workflows/maven-build/badge.svg)
+
+![GitHub](https://img.shields.io/github/stars/testingchief/karate-api-framework?style=social)
+![Twitter](http://img.shields.io/badge/@testingchief--lightgrey?logo=twitter&amp;style=social)
+
 # karate-api-framework
 The [ParaBank](https://parabank.parasoft.com/parabank/index.htm) demo web application and associated REST web services validated with the [Karate](https://github.com/karatelabs/karate) framework. It includes examples to send requests, validate responses and generate reports.
 
