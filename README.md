@@ -1,5 +1,6 @@
 ![Build](http://img.shields.io/badge/Build-1.0-GREEN.svg)
 ![Maven](https://github.com/testingchief/karate-api-framework/workflows/maven-build/badge.svg)
+![Karate](http://img.shields.io/badge/Karate-1.3.1-GREEN.svg)
 
 ![GitHub](https://img.shields.io/github/stars/testingchief/karate-api-framework?style=social)
 ![Twitter](http://img.shields.io/badge/@testingchief--lightgrey?logo=twitter&amp;style=social)
