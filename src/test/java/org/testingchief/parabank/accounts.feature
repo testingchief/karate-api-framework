@@ -191,7 +191,7 @@ Feature: Parabank Customer Accounts
     When method POST
     Then status 200
 
-    * def loanAmount = fakerObj.number().numberBetween(10000, 100000)
+    * def loanAmount = fakerObj.number().numberBetween(100000, 1000000)
     * def downPayment = accountBalance
     Given path 'requestLoan'
     And param customerId = customerId
